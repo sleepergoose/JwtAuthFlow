@@ -1,4 +1,4 @@
-﻿using Shared;
+﻿using Shared.Exceptions;
 
 namespace Domain.Exceptions;
 

@@ -1,4 +1,4 @@
-﻿namespace Shared.Enums;
+﻿namespace Domain.Constants;
 
 public enum Role
 {

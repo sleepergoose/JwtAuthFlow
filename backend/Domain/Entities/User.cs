@@ -1,6 +1,6 @@
-﻿using Domain.ValueObjects.User;
+﻿using Domain.Constants;
+using Domain.ValueObjects.User;
 using Shared.Domain;
-using Shared.Enums;
 
 namespace Domain.Entities;
 
