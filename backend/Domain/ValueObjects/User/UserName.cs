@@ -12,7 +12,7 @@ public sealed record class UserName
             throw new EmptyUserNameException();
         }
 
-        if (value.Length < 3)
+        if (value.Length < 3 || value.Length > 64)
         {
             throw new InvalidUserNameLengthException();
         }
