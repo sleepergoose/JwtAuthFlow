@@ -12,4 +12,6 @@ internal static class Constants
         { "UserPasswordHash", "PasswordHash" },
         { "Role", "Role" }
     };
+
+    public static string PostgreSqlSectionName = "PostgreSQL";
 }

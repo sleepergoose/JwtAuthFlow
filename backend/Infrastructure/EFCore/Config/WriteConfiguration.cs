@@ -50,7 +50,7 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName(Constants.UsersTableColumnNames[nameof(UserEmail)]);
 
         builder
-            .Property<UserPasswordHash>("_email")
+            .Property<UserPasswordHash>("_passwordHash")
             .HasConversion(passwordHashConverter)
             .HasColumnName(Constants.UsersTableColumnNames[nameof(UserPasswordHash)]);
 

@@ -1,0 +1,1 @@
+dotnet ef migrations add Initial --output-dir ./EFCore/Migrations/ --project Infrastructure --startup-project WebApi --context WriteDbContext
