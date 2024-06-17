@@ -4,7 +4,7 @@ using Shared.Domain;
 
 namespace Domain.Entities;
 
-public sealed  class User : AggregateRoot<UserId>
+public sealed class User : AggregateRoot<UserId>
 {
     private UserName _name;
     private UserEmail _email;
@@ -25,5 +25,15 @@ public sealed  class User : AggregateRoot<UserId>
         _email = email;
         _passwordHash = passwordHash;
         _role = role;
+    }
+
+    public void UpdateName(string name)
+    {
+        this._name = new UserName(name);
+    }
+
+    public void UpdatePaswordHash(string passwordHash)
+    {
+        this._passwordHash = new UserPasswordHash(passwordHash);
     }
 }
