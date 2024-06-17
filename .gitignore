@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 
+/backend/WebApi/Properties/launchSettings.json

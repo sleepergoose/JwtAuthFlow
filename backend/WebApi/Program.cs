@@ -1,4 +1,5 @@
 using Application;
+using Infrastructure;
 
 namespace WebApi;
 
@@ -15,6 +16,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddApplication();
+        builder.Services.AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 
