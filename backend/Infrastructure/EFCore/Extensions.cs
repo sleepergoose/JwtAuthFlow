@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Exceptions;
+using Application.Services;
+using Infrastructure.EFCore.Services;
+using Domain.Repositories;
+using Infrastructure.EFCore.Repositories;
 
 namespace Infrastructure.EFCore;
 
@@ -22,6 +26,9 @@ internal static class Extensions
             opt.UseNpgsql(options.ConnectionString));
 
         AppContext.SetSwitch(switchName: "Npgsql.EnableLegacyTimestampBehavior", isEnabled: true);
+
+        services.AddScoped<IReadUserService, ReadUserService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

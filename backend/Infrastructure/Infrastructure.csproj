@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="EFCore\Migrations\" />
     <Folder Include="EFCore\Queries\" />
-    <Folder Include="EFCore\Repositories\" />
     <Folder Include="Logging\" />
   </ItemGroup>
 
