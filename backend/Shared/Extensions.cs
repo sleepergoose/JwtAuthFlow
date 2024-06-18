@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Commands;
+using Shared.Queries;
 
 namespace Shared;
 
@@ -11,5 +14,13 @@ public static class Extensions
         configuration.GetSection(sectionsName).Bind(options);
 
         return options;
+    }
+
+    public static IServiceCollection AddCqrs(this IServiceCollection services)
+    {
+        services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
+        services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+
+        return services;
     }
 }
