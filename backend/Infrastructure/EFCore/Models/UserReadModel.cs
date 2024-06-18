@@ -1,8 +1,7 @@
 ﻿using Domain.Constants;
 
-namespace Application.DTO;
-
-public sealed class UserDto
+namespace Infrastructure.EFCore.Models;
+internal sealed class UserReadModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
