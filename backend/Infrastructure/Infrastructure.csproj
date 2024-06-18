@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="EFCore\Migrations\" />
-    <Folder Include="EFCore\Queries\" />
     <Folder Include="Logging\" />
   </ItemGroup>
 
