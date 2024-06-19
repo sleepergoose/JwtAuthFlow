@@ -11,7 +11,7 @@ internal class GetUserHandler(ReadDbContext dbContext) : IQueryHandler<GetUserQu
 {
     private readonly DbSet<UserReadModel> _users = dbContext.Set<UserReadModel>();
 
-    public Task<UserDto> ExecuteAsync(GetUserQuery query)
+    public Task<UserDto> HandleAsync(GetUserQuery query)
         => _users
             .Where(u => u.Id == query.id)
             .Select(u => u.AsDto())

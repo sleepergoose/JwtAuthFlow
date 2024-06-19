@@ -12,7 +12,7 @@ internal class SearchUserHandler(ReadDbContext dbContext)
 {
     private readonly DbSet<UserReadModel> _users = dbContext.Set<UserReadModel>();
 
-    public async Task<IEnumerable<UserDto>> ExecuteAsync(SearchUserQuery query)
+    public async Task<IEnumerable<UserDto>> HandleAsync(SearchUserQuery query)
     {
         var dbQuery = _users.AsQueryable();
 
