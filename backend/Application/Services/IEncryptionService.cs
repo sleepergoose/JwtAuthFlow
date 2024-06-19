@@ -2,6 +2,6 @@
 
 public interface IEncryptionService
 {
-    byte[] GetPasswordHash(string password, byte[] knownSecret);
-    bool VerifyPassword(string password, byte[] hashedPassword, byte[] knownSecret);
+    string GetPasswordHash(string password, byte[] knownSecret);
+    bool VerifyPassword(string password, string hashedPassword, byte[] knownSecret);
 }

@@ -2,5 +2,5 @@
 
 namespace Infrastructure.Exceptions;
 
-internal sealed class InvalidValueLengthException(string paramName, Type type, int requiredLength)
-    : JwtAuthFlowException($"Value length of {paramName} of type {nameof(type)} must have size {requiredLength}");
+public sealed class InvalidValueLengthException(string paramName, Type type, int requiredLength)
+    : JwtAuthFlowException($"Value length of {paramName} of type {type.Name} must have size {requiredLength}");

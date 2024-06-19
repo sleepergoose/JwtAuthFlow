@@ -6,11 +6,17 @@ using System.Text;
 
 namespace Infrastructure.Services;
 
-internal sealed class EncryptionService : IEncryptionService
+public sealed class EncryptionService : IEncryptionService
 {
     private readonly int _byteSize = 32;
+    private readonly int _hashSize = 128;
 
-    public byte[] GetPasswordHash(string password, byte[] knownSecret)
+    private const int DegreeOfParallelism = 16;
+    private const int MemorySize = 8192;
+    private const int Iterations = 40;
+
+
+    public string GetPasswordHash(string password, byte[] knownSecret)
     {
         if (string.IsNullOrEmpty(password))
         {
@@ -28,15 +34,15 @@ internal sealed class EncryptionService : IEncryptionService
 
         var argon2 = new Argon2id(passwordInBytes)
         {
-            DegreeOfParallelism = 16,
-            MemorySize = 8192,
-            Iterations = 40,
+            DegreeOfParallelism = EncryptionService.DegreeOfParallelism,
+            MemorySize = EncryptionService.MemorySize,
+            Iterations = EncryptionService.Iterations,
             Salt = salt,
             AssociatedData = userUuid,
             KnownSecret = knownSecret,
         };
 
-        var hash = argon2.GetBytes(128);
+        var hash = argon2.GetBytes(_hashSize);
 
         byte[] hashWithKeys = new byte[hash.Length + _byteSize * 2 + knownSecret.Length];
 
@@ -52,41 +58,41 @@ internal sealed class EncryptionService : IEncryptionService
         destinationIndex += userUuid.Length;
         Array.Copy(knownSecret, 0, hashWithKeys, destinationIndex, knownSecret.Length);
 
-        return hashWithKeys;
+        return Convert.ToBase64String(hashWithKeys);
     }
 
-    public bool VerifyPassword(string password, byte[] hashedPassword, byte[] knownSecret)
+    public bool VerifyPassword(string password, string hashedPassword, byte[] knownSecret)
     {
+        byte[] hashedPasswordBytes = Convert.FromBase64String(hashedPassword);
         byte[] salt = new byte[_byteSize];
         byte[] userUuid = new byte[_byteSize];
-        byte[] hash = new byte[hashedPassword.Length - _byteSize * 2 - knownSecret.Length];
+        byte[] hash = new byte[_hashSize];
 
         int sourceIndex = 0;
-        Array.Copy(hashedPassword, sourceIndex, salt, 0, _byteSize);
+        Array.Copy(hashedPasswordBytes, sourceIndex, salt, 0, _byteSize);
 
-        sourceIndex = hashedPassword.Length - _byteSize;
-        Array.Copy(hashedPassword, sourceIndex, knownSecret, 0, _byteSize);
+        sourceIndex = hashedPasswordBytes.Length - _byteSize;
+        Array.Copy(hashedPasswordBytes, sourceIndex, knownSecret, 0, _byteSize);
 
-        sourceIndex = hashedPassword.Length - 2 * _byteSize;
-        Array.Copy(hashedPassword, sourceIndex, userUuid, 0, _byteSize);
+        sourceIndex = hashedPasswordBytes.Length - 2 * _byteSize;
+        Array.Copy(hashedPasswordBytes, sourceIndex, userUuid, 0, _byteSize);
 
-        int length = hashedPassword.Length - 3 * _byteSize;
-        Array.Copy(hashedPassword, _byteSize, hash, 0, length);
+        Array.Copy(hashedPasswordBytes, _byteSize, hash, 0, _hashSize);
 
         byte[] passwordInBytes = Encoding.UTF8.GetBytes(password);
 
         var argon2 = new Argon2id(passwordInBytes)
         {
-            DegreeOfParallelism = 16,
-            MemorySize = 8192,
-            Iterations = 40,
+            DegreeOfParallelism = EncryptionService.DegreeOfParallelism,
+            MemorySize = EncryptionService.MemorySize,
+            Iterations = EncryptionService.Iterations,
             Salt = salt,
             AssociatedData = userUuid,
             KnownSecret = knownSecret,
         };
 
-        var computedHash = argon2.GetBytes(128);
+        var computedHash = argon2.GetBytes(_hashSize);
 
-        return hash.SequenceEqual(computedHash); ;
+        return hash.SequenceEqual(computedHash);
     }
 }

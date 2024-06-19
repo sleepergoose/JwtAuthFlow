@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Exceptions;
 
-internal sealed class EmptyOrNullValueException(string paramName, Type type)
-    : JwtAuthFlowException($"Value of {paramName} of type {nameof(type)} cannot be null or empty")
+public sealed class EmptyOrNullValueException(string paramName, Type type)
+    : JwtAuthFlowException($"Value of {paramName} of type {type.Name} cannot be null or empty")
 {
 }
