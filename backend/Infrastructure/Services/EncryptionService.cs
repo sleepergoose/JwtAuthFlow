@@ -1,12 +1,15 @@
 ﻿using Application.Services;
 using Infrastructure.Exceptions;
+using Infrastructure.Options;
 using Konscious.Security.Cryptography;
+using Microsoft.Extensions.Configuration;
+using Shared;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Infrastructure.Services;
 
-public sealed class EncryptionService : IEncryptionService
+public sealed class EncryptionService(IConfiguration configuration) : IEncryptionService
 {
     private readonly int _byteSize = 32;
     private readonly int _hashSize = 128;
@@ -15,6 +18,17 @@ public sealed class EncryptionService : IEncryptionService
     private const int MemorySize = 8192;
     private const int Iterations = 40;
 
+    private readonly IConfiguration _configuration = configuration;
+
+    public string GetPasswordHash(string password)
+    {
+        var argonOptions = _configuration.GetOptions<ArgonOptions>("Argon2")
+            ?? throw new OptionsNotFoundException("Argon2", typeof(ArgonOptions));
+
+        byte[] knownSecret =  Convert.FromBase64String(argonOptions.KnownSecret);
+
+        return GetPasswordHash(password, knownSecret);
+    }
 
     public string GetPasswordHash(string password, byte[] knownSecret)
     {

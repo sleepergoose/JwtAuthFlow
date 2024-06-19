@@ -1,5 +1,7 @@
-﻿using Infrastructure.EFCore;
+﻿using Application.Services;
+using Infrastructure.EFCore;
 using Infrastructure.EFCore.Services;
+using Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +13,8 @@ public static class Extensions
     {
         services.AddPostgreSQL(configuration);
         services.AddHostedService<MigrationService>();
+
+        services.AddScoped<IEncryptionService, EncryptionService>();
 
         return services;
     }

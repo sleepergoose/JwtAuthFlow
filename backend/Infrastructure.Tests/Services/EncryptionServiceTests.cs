@@ -3,6 +3,8 @@ using Infrastructure.Services;
 using System.Security.Cryptography;
 using Shouldly;
 using Infrastructure.Exceptions;
+using NSubstitute;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Tests.Services;
 
@@ -15,7 +17,8 @@ public class EncryptionServiceTests
 
     public EncryptionServiceTests()
     {
-        _encryptionService = new EncryptionService();
+
+        _encryptionService = new EncryptionService(Substitute.For<IConfiguration>());
         _knownSecret = RandomNumberGenerator.GetBytes(32);
     }
 

@@ -12,17 +12,17 @@ internal sealed class WriteConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         var nameConverter = new ValueConverter<UserName, string>(
-            valueToDatabase => valueToDatabase.ToString(),
+            valueToDatabase => valueToDatabase.Value,
             valueFromDatabase => new UserName(valueFromDatabase)
             );
 
         var emailConverter = new ValueConverter<UserEmail, string>(
-            valueToDB => valueToDB.ToString(),
+            valueToDB => valueToDB.Value,
             valueFromDB => new UserEmail(valueFromDB)
             );
 
         var passwordHashConverter = new ValueConverter<UserPasswordHash, string>(
-            valueToDB => valueToDB.ToString(),
+            valueToDB => valueToDB.Value,
             valueFromDB => new UserPasswordHash(valueFromDB)
             );
 

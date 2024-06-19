@@ -21,7 +21,7 @@ internal sealed record class ArgonOptions
                 throw new EmptyOrNullValueException(nameof(KnownSecret), value.GetType());
             }
 
-            if (value.Length != _byteSize)
+            if (Convert.FromBase64String(value).Length != _byteSize)
             {
                 throw new InvalidValueLengthException(nameof(KnownSecret), value.GetType(), _byteSize);
             }

@@ -19,8 +19,9 @@ public sealed class User : AggregateRoot<UserId>
     }
     
 
-    public User(UserName name, UserEmail email, UserPasswordHash passwordHash, Role role = Role.User)
+    public User(UserId id, UserName name, UserEmail email, UserPasswordHash passwordHash, Role role = Role.User)
     {
+        Id = id;
         _name = name;
         _email = email;
         _passwordHash = passwordHash;
