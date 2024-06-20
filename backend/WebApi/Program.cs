@@ -1,6 +1,5 @@
 using Application;
 using Application.Commands;
-using Application.Services;
 using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Shared;
 using Domain.Constants;
 using WebApi.DTO;
 using Shared.Commands;
+using Application.Services.Interfaces;
 
 namespace WebApi;
 
@@ -35,7 +35,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.MapPost("/users", async ([FromBody] CreateUserDto dto, IEncryptionService _service, ICommandDispatcher _dispatcher) =>
+        app.MapPost("/users/register", async ([FromBody] CreateUserDto dto, IEncryptionService _service, ICommandDispatcher _dispatcher) =>
         {
             var passwordHash = _service.GetPasswordHash(dto.Password);
 
@@ -53,6 +53,13 @@ public class Program
             return Results.Ok(command.Id);
         })
         .WithName("CreateUser")
+        .WithOpenApi();
+
+        app.MapPost("/users/login", async ([FromBody] LoginUserDto dto, IEncryptionService _service, ICommandDispatcher _dispatcher) =>
+        {
+            return Results.Ok();
+        })
+        .WithName("LogInUser")
         .WithOpenApi();
 
         app.Run();

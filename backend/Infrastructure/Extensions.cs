@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Services.Interfaces;
 using Infrastructure.EFCore;
 using Infrastructure.EFCore.Services;
 using Infrastructure.Services;

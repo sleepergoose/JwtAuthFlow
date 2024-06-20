@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Exceptions;
-using Application.Services;
 using Infrastructure.EFCore.Services;
 using Domain.Repositories;
 using Infrastructure.EFCore.Repositories;
+using Application.Services.Interfaces;
 
 namespace Infrastructure.EFCore;
 

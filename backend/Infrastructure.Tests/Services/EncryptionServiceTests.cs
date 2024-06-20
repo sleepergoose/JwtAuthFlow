@@ -1,10 +1,10 @@
-using Application.Services;
 using Infrastructure.Services;
 using System.Security.Cryptography;
 using Shouldly;
 using Infrastructure.Exceptions;
 using NSubstitute;
 using Microsoft.Extensions.Configuration;
+using Application.Services.Interfaces;
 
 namespace Infrastructure.Tests.Services;
 

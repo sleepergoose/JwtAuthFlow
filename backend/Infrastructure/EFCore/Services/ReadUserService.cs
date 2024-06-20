@@ -1,5 +1,5 @@
 ﻿using Application.DTO;
-using Application.Services;
+using Application.Services.Interfaces;
 using Infrastructure.EFCore.Contexts;
 using Infrastructure.EFCore.Models;
 using Microsoft.EntityFrameworkCore;
